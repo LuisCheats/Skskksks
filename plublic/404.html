@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Metadatos para compartir en WhatsApp y redes sociales -->
+    <meta property="og:title" content="Nexy API - Página no encontrada">
+    <meta property="og:description" content="Recurso no disponible en la infraestructura de Nexy API">
+    <meta property="og:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    <meta property="og:url" content="https://api-nexy.ultraplus.click">
+    <meta property="og:type" content="website">
+    
+    <!-- Metadatos específicos para WhatsApp -->
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NEXY API - Página no encontrada">
+    <meta name="twitter:description" content="Recurso no disponible en la infraestructura de NEXY API">
+    <meta name="twitter:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    
+    <title>404 - NEXY API | Página No Encontrada</title>
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-dark: #2563eb;
+            --background-dark: #02060f;
+            --text-light: #ffffff;
+            --text-secondary: #94a3b8;
+            --surface-dark: rgba(255, 255, 255, 0.03);
+            --border-light: rgba(255, 255, 255, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #02060f 0%, #000000 100%);
+            color: var(--text-light);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Efecto de partículas en el fondo */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 10px 0 20px 0;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 450px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            padding: 0 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 360px;
+            margin-bottom: 45px;
+        }
+
+        .btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .info-box {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            text-align: left;
+        }
+        
+        .info-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .info-content ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        
+        .info-content li {
+            margin-bottom: 6px;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 30px 0 20px 0;
+            color: #334155;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        /* Animación sutil para el 404 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        h1 {
+            animation: pulse 3s infinite ease-in-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 4rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .button-group {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+            
+            .info-box {
+                margin: 0 15px 30px 15px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            p {
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://cdn.russellxz.click/cc450380.jpg" alt="Logo Nexy" class="logo">
+        <h1>404</h1>
+        <h2>Recurso No Encontrado</h2>
+        
+        <div class="button-group">
+            <a href="https://api-nexy.ultraplus.click" class="btn">
+                <i class="fas fa-home"></i>
+                Inicio
+            </a>
+            
+            <a href="https://wa.me/819095203873?text=Hola%20Nexy" 
+               target="_blank" 
+               class="btn btn-secondary">
+                <i class="fab fa-whatsapp"></i>
+                Soporte Técnico
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <div class="info-title">
+                <i class="fas fa-info-circle"></i>
+                Posibles causas
+            </div>
+            <div class="info-content">
+                <ul>
+                    <li>La ruta de API puede haber cambiado o sido deprecada</li>
+                    <li>Verifica que estés utilizando la versión correcta de la API</li>
+                    <li>Confirma los parámetros y métodos HTTP requeridos</li>
+                    <li>Consulta nuestra documentación para referencias actualizadas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">NEXY DEVELOPMENT TEAM • 2024</div>
+    </div>
+
+    <script>
+        // Efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar efecto al cargar
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Efecto al hacer clic en botones
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // Solo para el botón de WhatsApp abrimos en nueva pestaña
+                    if (this.getAttribute('href')?.includes('wa.me')) {
+                        return; // Dejar que el enlace se abra normalmente
+                    }
+                    
+                    // Efecto de clic para otros botones
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // Efecto sutil en el logo
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('mouseenter', function() {
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            // Actualizar año en el footer
+            const currentYear = new Date().getFullYear();
+            const footer = document.querySelector('.footer');
+            footer.textContent = footer.textContent.replace('2024', currentYear);
+            
+            // Mostrar la URL actual en consola para debugging
+            console.log('URL actual:', window.location.href);
+        });
+        
+        // Para WhatsApp: Cambia XXXXXXXXXX por tu número real
+        // Ejemplo: 5215512345678 (México)
+        // Formato: código país + número sin espacios
+    </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Metadatos para compartir -->
+    <meta property="og:title" content="NEXY API | Core Infrastructure">
+    <meta property="og:description" content="Infraestructura de alta disponibilidad y rendimiento confiable para desarrolladores modernos">
+    <meta property="og:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    <meta property="og:url" content="https://api-nexy.ultraplus.click">
+    <meta property="og:type" content="website">
+    
+    <!-- Metadatos específicos para WhatsApp -->
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NEXY API | Core Infrastructure">
+    <meta name="twitter:description" content="Infraestructura de alta disponibilidad para desarrolladores">
+    <meta name="twitter:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    
+    <title>NEXY API | Core Infrastructure</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-dark: #2563eb;
+            --background-dark: #02060f;
+            --text-light: #ffffff;
+            --text-secondary: #94a3b8;
+            --surface-dark: rgba(255, 255, 255, 0.015);
+            --border-light: rgba(255, 255, 255, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #02060f 0%, #000000 100%);
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Efecto de fondo sutil */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .logo { 
+            width: 90px; 
+            height: 90px; 
+            object-fit: cover; 
+            border-radius: 20px; 
+            margin-top: 40px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        h1 { 
+            font-size: 2rem; 
+            margin: 20px 0 10px 0; 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+        }
+        
+        .tagline { 
+            color: #666; 
+            font-size: 0.9rem; 
+            max-width: 320px; 
+            text-align: center; 
+            line-height: 1.5; 
+            margin-bottom: 35px; 
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 360px;
+            margin-bottom: 45px;
+        }
+
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 360px; 
+        }
+        
+        .label { 
+            font-size: 0.7rem; 
+            color: #222; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin: 20px 0 15px 5px; 
+            display: block; 
+            font-weight: 800; 
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 22px;
+            padding: 22px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .custom-icon { 
+            width: 28px; 
+            height: 28px; 
+            filter: brightness(0) invert(1); 
+        }
+        
+        .card-info h3 { 
+            margin: 0; 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+        }
+        
+        .card-info p { 
+            margin: 5px 0 0 0; 
+            color: #555; 
+            font-size: 0.8rem; 
+            line-height: 1.5; 
+        }
+
+        .stat-val { 
+            margin-left: auto; 
+            color: #3b82f6; 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        .stt {
+            width: 7px; 
+            height: 7px; 
+            background-color: #3b82f6; 
+            border-radius: 50%; 
+            box-shadow: 0 0 10px #3b82f6; 
+        }
+        
+        .status-dot { 
+            width: 7px; 
+            height: 7px; 
+            background-color: #3b82f6; 
+            border-radius: 50%; 
+            box-shadow: 0 0 10px #3b82f6; 
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .footer { 
+            margin-top: auto; 
+            padding: 50px 0 30px 0; 
+            color: #111; 
+            font-size: 0.65rem; 
+            text-align: center; 
+            font-weight: bold; 
+            letter-spacing: 2px; 
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .logo {
+                width: 85px;
+                height: 85px;
+                margin-top: 30px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .button-group {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://cdn.russellxz.click/cc450380.jpg" class="logo" alt="NEXY API Logo">
+    <h1>NEXY API</h1>
+    <div class="tagline">Infraestructura de alta disponibilidad y rendimiento confiable para desarrolladores modernos.</div>
+
+    <div class="button-group">
+        <a href="https://api-nexy.ultraplus.click/doc" class="btn">
+            <i class="fas fa-book"></i>
+            View Documentation
+        </a>
+        <a href="https://api-nexy.ultraplus.click/api" class="btn btn-secondary">
+            <i class="fas fa-code"></i>
+            Explore APIs
+        </a>
+    </div>
+
+    <div class="container">
+        <span class="label">Arquitectura</span>
+        <div class="card">
+            <img src="https://cdn.russellxz.click/4a26032a.png" class="custom-icon" alt="Velocidad Icon">
+            <div class="card-info">
+                <h3>Velocidad de Respuesta</h3>
+                <p>Procesamiento optimizado para flujos en tiempo real.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn.russellxz.click/f049ed9c.png" class="custom-icon" alt="Soporte Icon">
+            <div class="card-info">
+                <h3>Soporte Permanente</h3>
+                <p>Monitorización de red ininterrumpida las 24 horas.</p>
+            </div>
+        </div>
+
+        <span class="label">Sistema</span>
+        <div class="card">
+            <div class="card-info"><h3>Velocidad</h3></div>
+            <div class="stat-val"><div class="tt"></div> Estable</div>
+        </div>
+
+        <div class="card">
+            <div class="card-info"><h3>Estado del Servicio</h3></div>
+            <div class="stat-val"><div class="status-dot"></div> Online</div>
+        </div>
+    </div>
+
+    <div class="footer">NEXY DEVELOPMENT TEAM • POWERED BY NEXY</div>
+
+    <script>
+        // Actualizar año en el footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYear = new Date().getFullYear();
+            const footer = document.querySelector('.footer');
+            footer.textContent = footer.textContent.replace('2024', currentYear);
+            
+            // Efectos de carga
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Efecto en logo
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('mouseenter', function() {
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            // Efecto en botones
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // Efecto de clic
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        // Función para formatear tiempo de actividad
+        function formatUptime(ms) {
+            let totalSeconds = Math.floor(ms / 1000);
+            let hours = Math.floor(totalSeconds / 3600);
+            let minutes = Math.floor((totalSeconds % 3600) / 60);
+            let seconds = totalSeconds % 60;
+            return `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Simulación de uptime
+        async function updateUptime() {
+            try {
+                // Simulación de datos - reemplazar con tu endpoint real
+                const fakeUptime = {
+                    ms: Date.now() - new Date('2024-01-01').getTime()
+                };
+                
+                document.getElementById('uptime-val').innerText = formatUptime(fakeUptime.ms);
+            } catch {
+                document.getElementById('uptime-val').innerText = "Estable";
+            }
+        }
+
+        // Actualizar cada 30 segundos
+        updateUptime();
+        setInterval(updateUptime, 30000);
+    </script>
+</body>
+</html>

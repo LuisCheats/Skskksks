@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #000000;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXY API | Endpoints</title>
+
+    <meta property="og:title" content="NEXY API | Endpoints">
+    <meta property="og:description" content="Explorador oficial de endpoints de NEXY Infrastructure.">
+    <meta property="og:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    <meta property="og:url" content="https://api-nexy.ultraplus.click">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cdn.russellxz.click/cc450380.jpg">
+
+    <style>
+        /* Eliminamos cualquier rastro de blanco del navegador */
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000000;
+        }
+
+        body {
+            /* Fondo fijo que no se mueve con el scroll */
+            background: radial-gradient(circle at center, #02060f 0%, #000000 100%) no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0 45px 0;
+        }
+
+        .main-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .category-label {
+            font-size: 0.75rem;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px 0 15px 5px;
+            display: block;
+            font-weight: 800;
+        }
+
+        .api-item {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .api-header {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .code-icon {
+            color: #555;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.03);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-right: 15px;
+        }
+
+        .api-title-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .api-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .endpoint-path {
+            font-size: 0.75rem;
+            color: #444;
+            font-family: monospace;
+            margin-top: 4px;
+        }
+
+        .api-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .api-item.active .api-content {
+            max-height: 2000px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: #000000;
+        }
+
+        .input-box label {
+            font-size: 0.65rem;
+            color: #555;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .btn-execute {
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .json-box, .url-box {
+            margin-top: 15px;
+            background: #050505;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            overflow: auto;
+        }
+
+        .json-box { 
+            max-height: 350px; 
+            max-width: 100%;
+        }
+
+        .box-label {
+            font-size: 0.6rem;
+            color: #444;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        pre {
+            margin: 0;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #888;
+            white-space: pre;
+        }
+
+        .url-text {
+            color: #3b82f6;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            word-break: break-all;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-bottom: 30px;
+            color: #222;
+            font-size: 0.65rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://cdn.russellxz.click/cc450380.jpg" class="main-logo" alt="NEXY Logo">
+        <h1>NEXY API</h1>
+    </div>
+
+    <div class="container">
+        
+        <span class="category-label">Descargas</span>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">YouTube MP3</h3>
+                        <span class="endpoint-path">/api/dl/ytmp3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL del video *</label>
+                    <input type="text" placeholder="https://youtube.com/watch?v=...">
+                </div>
+                <button class="btn-execute" onclick="runApi(this, 'url')">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/ytmp3?url=</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">YouTube MP4</h3>
+                        <span class="endpoint-path">/api/dl/ytmp4</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL del video *</label>
+                    <input type="text" placeholder="https://youtube.com/watch?v=...">
+                    <label>Calidad (360, 720, 1080)</label>
+                    <input type="text" placeholder="360" value="360">
+                </div>
+                <button class="btn-execute" onclick="runMp4Api(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/ytmp4?url=</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">YouTube Download</h3>
+                        <span class="endpoint-path">/api/dl/ytdl</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL del video *</label>
+                    <input type="text" placeholder="https://youtube.com/watch?v=...">
+                    <label>Tipo (audio / video)</label>
+                    <input type="text" placeholder="video" value="video">
+                    <label>Calidad</label>
+                    <input type="text" placeholder="720" value="720">
+                </div>
+                <button class="btn-execute" onclick="runYtdlApi(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/ytdl?url=</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">YouTube Download V2</h3>
+                <span class="endpoint-path">/api/dl/ytdlv2</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL del video *</label>
+            <input type="text" placeholder="https://youtube.com/watch?v=..." id="yt-url-v2">
+            
+            <label>Tipo (audio / video)</label>
+            <input type="text" id="yt-type-v2" placeholder="video" value="video" oninput="updateYtFieldsV2(this.value)">
+            
+            <label>Calidad</label>
+            <input type="text" id="yt-quality-v2" placeholder="360" value="360">
+        </div>
+        
+        <button class="btn-execute" onclick="runYoutubeV2(this)">Execute</button>
+        
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output" id="yt-output-v2">Ready to execute</pre>
+        </div>
+        
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text" id="url-display-v2">https://api-nexy.ultraplus.click/api/dl/ytdlv2?url=</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">YouTube Download V3</h3>
+                <span class="endpoint-path">/api/dl/ytdlv3</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL del video *</label>
+            <input type="text" placeholder="https://youtube.com/watch?v=..." id="yt-url-v3">
+            
+            <label>Formato (mp3 / mp4)</label>
+            <input type="text" id="yt-type-v3" placeholder="mp3" value="mp4">
+        </div>
+        
+        <button class="btn-execute" onclick="runYtdlV3(this)">Execute</button>
+        
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output" id="yt-output-v3">Ready to execute</pre>
+        </div>
+        
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text" id="yt-url-display-v3">https://api-nexy.ultraplus.click/api/dl/ytdlv3?url=</div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">TikTok Downloader</h3>
+                        <span class="endpoint-path">/api/dl/tiktok</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL de TikTok *</label>
+                    <input type="text" placeholder="https://vm.tiktok.com/...">
+                </div>
+                <button class="btn-execute" onclick="runTikTok(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/tiktok?url=</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">Instagram Downloader</h3>
+                        <span class="endpoint-path">/api/dl/instagram</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL de Instagram *</label>
+                    <input type="text" placeholder="https://www.instagram.com/p/...">
+                </div>
+                <button class="btn-execute" onclick="runInstagram(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/instagram?url=</div>
+                </div>
+            </div>
+        </div>
+        <div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Facebook Video</h3>
+                <span class="endpoint-path">/api/dl/facebook</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL de Facebook (Reels/Video) *</label>
+            <input type="text" placeholder="https://www.facebook.com/watch?v=...">
+        </div>
+        <button class="btn-execute" onclick="runFacebook(this)">Execute</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready to execute</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/dl/facebook?url=</div>
+        </div>
+    </div>
+</div>
+        <div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Pinterest Video</h3>
+                <span class="endpoint-path">/api/dl/pinvideo</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL del Video de Pinterest *</label>
+            <input type="text" placeholder="https://pin.it/...">
+        </div>
+        <button class="btn-execute" onclick="runPinVideo(this)">Execute</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready to execute</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/dl/pinvideo?url=</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">MediaFire Downloader</h3>
+                <span class="endpoint-path">/api/dl/mediafire</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL de Archivo o Carpeta *</label>
+            <input type="text" placeholder="https://www.mediafire.com/file/...">
+        </div>
+        <button class="btn-execute" onclick="runMediafire(this)">Get Download Links</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready...</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/dl/mediafire?url=</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Twitter/X Downloader</h3>
+                <span class="endpoint-path">/api/dl/twitter</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL del Post (Status) *</label>
+            <input type="text" placeholder="https://x.com/user/status/123...">
+        </div>
+        <button class="btn-execute" onclick="runTwitter(this)">Get Media</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready...</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/dl/twitter?url=</div>
+        </div>
+    </div>
+</div>
+
+        <span class="category-label">Buscadores</span>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">Pinterest Search</h3>
+                        <span class="endpoint-path">/api/dl/pinterest</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>Búsqueda *</label>
+                    <input type="text" placeholder="Escribe lo que buscas...">
+                </div>
+                <button class="btn-execute" onclick="runPinterest(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/pinterest?q=</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">TikTok Search</h3>
+                <span class="endpoint-path">/api/search/tiktok</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>Término de búsqueda *</label>
+            <input type="text" placeholder="Ej: edits de anime, gatitos...">
+            <label>Límite (1-30)</label>
+            <input type="number" placeholder="12" value="12">
+        </div>
+        <button class="btn-execute" onclick="runTiktokSearch(this)">Search TikTok</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready to search</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/search/tiktok?q=</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Spotify Search</h3>
+                <span class="endpoint-path">/api/search/spotify</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>Nombre de canción o artista *</label>
+            <input type="text" placeholder="Ej: Blinding Lights - The Weeknd">
+        </div>
+        <button class="btn-execute" onclick="runSpotifySearch(this)">Search Music</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready...</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/search/spotify?q=</div>
+        </div>
+    </div>
+</div>
+
+
+<span class="category-label">Herramientas</span>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Imagen HD</h3>
+                <span class="endpoint-path">/api/tools/hd</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>URL de la imagen original *</label>
+            <input type="text" placeholder="https://ejemplo.com/foto.jpg">
+        </div>
+        <button class="btn-execute" onclick="runHdEnhance(this)">Execute</button>
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready to execute</pre>
+        </div>
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/tools/hd?url=</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-item">
+    <div class="api-header" onclick="toggleApi(this)">
+        <div class="header-top">
+            <div class="code-icon">&lt;/&gt;</div>
+            <div class="api-title-container">
+                <h3 class="api-title">Copilot AI Chat</h3>
+                <span class="endpoint-path">/api/ai/copilot</span>
+            </div>
+        </div>
+    </div>
+    <div class="api-content">
+        <div class="input-box">
+            <label>Pregunta o instrucción *</label>
+            <input type="text" placeholder="¿Cómo funciona la física cuántica?" id="copilot-query">
+            
+            <label style="margin-top: 15px; display: block;">Modo de IA</label>
+            <select class="api-select" id="copilot-mode" style="width: 100%; background: #1a1a1a; color: white; padding: 10px; border-radius: 8px; border: 1px solid #333; margin-top: 5px;">
+                <option value="default">Normal (Rápido)</option>
+                <option value="think-deeper">Think Deeper (Razonamiento)</option>
+                <option value="gpt-5">Smart Mode (GPT-4/5)</option>
+            </select>
+        </div>
+
+        <button class="btn-execute" onclick="runCopilot(this)" style="margin-top: 25px;">Ask Copilot</button>
+
+        <div class="json-box">
+            <span class="box-label">Response JSON</span>
+            <pre class="output">Ready to chat...</pre>
+        </div>
+
+        <div class="url-box">
+            <span class="box-label">Endpoint URL</span>
+            <div class="url-text">https://api-nexy.ultraplus.click/api/ai/copilot?q=</div>
+        </div>
+    </div>
+</div>
+
+
+        <span class="category-label">NSFW</span>
+
+        <div class="api-item">
+            <div class="api-header" onclick="toggleApi(this)">
+                <div class="header-top">
+                    <div class="code-icon">&lt;/&gt;</div>
+                    <div class="api-title-container">
+                        <h3 class="api-title">XNXX Download</h3>
+                        <span class="endpoint-path">/api/dl/xnxx</span>
+                    </div>
+                </div>
+            </div>
+            <div class="api-content">
+                <div class="input-box">
+                    <label>URL del video *</label>
+                    <input type="text" placeholder="https://www.xnxx.com/...">
+                </div>
+                <button class="btn-execute" onclick="runXnxx(this)">Execute</button>
+                <div class="json-box">
+                    <span class="box-label">Response JSON</span>
+                    <pre class="output">Ready to execute</pre>
+                </div>
+                <div class="url-box">
+                    <span class="box-label">Endpoint URL</span>
+                    <div class="url-text">https://api-nexy.ultraplus.click/api/dl/xnxx?url=</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- Cierre de container -->
+
+    <div class="footer">NEXY INFRASTRUCTURE • 2026</div>
+    
+    <script>
+        const DOMAIN = "https://api-nexy.ultraplus.click";
+
+        function toggleApi(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.api-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        function updateUrlBox(container, endpoint, query) {
+            const box = container.querySelector('.url-text');
+            box.innerText = `${DOMAIN}${endpoint}${query}`;
+        }
+
+        async function runApi(btn, param = 'url') {
+            const container = btn.parentElement;
+            const input = container.querySelector('input');
+            const pre = container.querySelector('.output');
+            const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+            const val = input.value.trim();
+            if (!val) { pre.innerHTML = "Error: Entrada vacía"; return; }
+            updateUrlBox(container, endpoint, `?${param}=${val}`);
+            pre.innerHTML = "Status: Loading data...";
+            try {
+                const response = await fetch(`${endpoint}?${param}=${encodeURIComponent(val)}`);
+                const data = await response.json();
+                pre.innerHTML = JSON.stringify(data, null, 4);
+            } catch (e) { pre.innerHTML = "Error de conexión"; }
+        }
+
+        async function runMp4Api(btn) {
+            const container = btn.parentElement;
+            const inputs = container.querySelectorAll('input');
+            const pre = container.querySelector('.output');
+            const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+            const url = inputs[0].value.trim();
+            const quality = inputs[1].value.trim();
+            if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+            updateUrlBox(container, endpoint, `?url=${url}&quality=${quality}`);
+            pre.innerHTML = "Status: Loading data...";
+            try {
+                const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}&quality=${quality}`);
+                const data = await response.json();
+                pre.innerHTML = JSON.stringify(data, null, 4);
+            } catch (e) { pre.innerHTML = "Error de conexión"; }
+        }
+
+async function runXnxx(btn) {
+    const container = btn.parentElement;
+    const input = container.querySelector('input');
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    const url = input.value.trim();
+
+    if (!url) { 
+        pre.innerHTML = "Error: URL requerida"; 
+        return; 
+    }
+
+    // Actualiza la URL visible
+    updateUrlBox(container, endpoint, `?url=${url}`);
+
+    // Mensaje de carga
+    pre.innerHTML = "Status: Loading data...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+        async function runYtdlApi(btn) {
+            const container = btn.parentElement;
+            const inputs = container.querySelectorAll('input');
+            const pre = container.querySelector('.output');
+            const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+            const url = inputs[0].value.trim();
+            const type = inputs[1].value.trim();
+            const quality = inputs[2].value.trim();
+            if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+            updateUrlBox(container, endpoint, `?url=${url}&type=${type}&quality=${quality}`);
+            pre.innerHTML = "Status: Loading data...";
+            try {
+                const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}&type=${type}&quality=${quality}`);
+                const data = await response.json();
+                pre.innerHTML = JSON.stringify(data, null, 4);
+            } catch (e) { pre.innerHTML = "Error de conexión"; }
+        }
+
+        async function runTikTok(btn) {
+            const container = btn.parentElement;
+            const input = container.querySelector('input');
+            const pre = container.querySelector('.output');
+            const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+            const url = input.value.trim();
+            if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+            updateUrlBox(container, endpoint, `?url=${url}`);
+            pre.innerHTML = "Status: Loading data...";
+            try {
+                const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+                pre.innerHTML = JSON.stringify(data, null, 4);
+            } catch (e) { pre.innerHTML = "Error de conexión"; }
+        }
+
+        async function runPinterest(btn) {
+            const container = btn.parentElement;
+            const input = container.querySelector('input');
+            const pre = container.querySelector('.output');
+            const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+            const q = input.value.trim();
+            if (!q) { pre.innerHTML = "Error: Término requerido"; return; }
+            updateUrlBox(container, endpoint, `?q=${q}`);
+            pre.innerHTML = "Status: Loading data...";
+            try {
+                const response = await fetch(`${endpoint}?q=${encodeURIComponent(q)}`);
+                const data = await response.json();
+                pre.innerHTML = JSON.stringify(data, null, 4);
+            } catch (e) { pre.innerHTML = "Error de conexión"; }
+        }
+        
+        async function runInstagram(btn) {
+    const container = btn.parentElement;
+    const input = container.querySelector('input');
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    const url = input.value.trim();
+
+    if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Loading data...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { pre.innerHTML = "Error de conexión"; }
+}
+
+async function runPinVideo(btn) {
+    const container = btn.parentElement;
+    const input = container.querySelector('input');
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    const url = input.value.trim();
+
+    if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Loading data...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión o servidor"; 
+    }
+}
+
+async function runHdEnhance(btn) {
+    const container = btn.parentElement;
+    const input = container.querySelector('input');
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    const url = input.value.trim();
+
+    if (!url) { pre.innerHTML = "Error: URL de imagen requerida"; return; }
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Processing HD filters...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error al procesar la imagen"; 
+    }
+}
+
+async function runTiktokSearch(btn) {
+    const container = btn.parentElement;
+    const inputs = container.querySelectorAll('input');
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    
+    const q = inputs[0].value.trim();
+    const limit = inputs[1].value.trim();
+
+    if (!q) { pre.innerHTML = "Error: Escribe algo para buscar"; return; }
+    
+    updateUrlBox(container, endpoint, `?q=${q}&limit=${limit}`);
+    pre.innerHTML = "Status: Searching TikTok feed...";
+
+    try {
+        const response = await fetch(`${endpoint}?q=${encodeURIComponent(q)}&limit=${limit}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+async function runCopilot(btn) {
+    const container = btn.parentElement;
+    const q = container.querySelector('#copilot-query').value.trim();
+    const mode = container.querySelector('#copilot-mode').value;
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+
+    if (!q) { 
+        pre.innerHTML = "Error: Escribe una pregunta"; 
+        return; 
+    }
+    
+    // Actualizar el cuadro de URL visualmente
+    updateUrlBox(container, endpoint, `?q=${q}&mode=${mode}`);
+    
+    pre.innerHTML = "Status: Copilot está pensando...";
+
+    try {
+        const response = await fetch(`${endpoint}?q=${encodeURIComponent(q)}&mode=${mode}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión con la IA"; 
+    }
+}
+
+async function runMediafire(btn) {
+    const container = btn.parentElement;
+    const url = container.querySelector('input').value.trim();
+    const pre = container.querySelector('.output');
+    const endpoint = "/api/dl/mediafire";
+
+    if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+    
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Escaneando MediaFire...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+async function runFacebook(btn) {
+    const container = btn.parentElement;
+    const url = container.querySelector('input').value.trim();
+    const pre = container.querySelector('.output');
+    const endpoint = "/api/dl/facebook";
+
+    if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+    
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Scrapeando Facebook...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+async function runSpotifySearch(btn) {
+    const container = btn.parentElement;
+    const q = container.querySelector('input').value.trim();
+    const pre = container.querySelector('.output');
+    const endpoint = "/api/search/spotify";
+
+    if (!q) { pre.innerHTML = "Error: Escribe una canción"; return; }
+    
+    updateUrlBox(container, endpoint, `?q=${q}`);
+    pre.innerHTML = "Status: Consultando Spotify API...";
+
+    try {
+        const response = await fetch(`${endpoint}?q=${encodeURIComponent(q)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+async function runTwitter(btn) {
+    const container = btn.parentElement;
+    const url = container.querySelector('input').value.trim();
+    const pre = container.querySelector('.output');
+    const endpoint = "/api/dl/twitter";
+
+    if (!url) { pre.innerHTML = "Error: URL requerida"; return; }
+    
+    updateUrlBox(container, endpoint, `?url=${url}`);
+    pre.innerHTML = "Status: Extrayendo media de X...";
+
+    try {
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error de conexión"; 
+    }
+}
+
+// Función para manejar el cambio automático entre audio y video
+function updateYtFields(val) {
+    const type = val.toLowerCase().trim();
+    const qualityInput = document.getElementById('yt-quality-v2');
+
+    if (type === 'audio') {
+        qualityInput.value = 'mp3';
+        qualityInput.readOnly = true;
+        qualityInput.style.opacity = "0.6";
+    } else {
+        // Si el usuario borra o escribe 'video'
+        if (qualityInput.value === 'mp3') {
+            qualityInput.value = '360';
+        }
+        qualityInput.readOnly = false;
+        qualityInput.style.opacity = "1";
+    }
+}
+
+function updateYtFields(val) {
+    const type = val.toLowerCase().trim();
+    const qualityInput = document.getElementById('yt-quality-v2');
+    if (type === 'audio') {
+        qualityInput.value = 'mp3';
+        qualityInput.readOnly = true;
+        qualityInput.style.opacity = "0.5";
+    } else {
+        if (qualityInput.value === 'mp3') qualityInput.value = '360';
+        qualityInput.readOnly = false;
+        qualityInput.style.opacity = "1";
+    }
+}
+
+function updateYtFields(val) {
+    const type = val.toLowerCase().trim();
+    const qualityInput = document.getElementById('yt-quality-v2');
+    if (type === 'audio') {
+        qualityInput.value = 'mp3';
+        qualityInput.readOnly = true;
+    } else {
+        if (qualityInput.value === 'mp3') qualityInput.value = '360';
+        qualityInput.readOnly = false;
+    }
+}
+
+function updateYtFieldsV2(val) {
+    const type = val.toLowerCase().trim();
+    const qualityInput = document.getElementById('yt-quality-v2');
+
+    if (type === 'audio') {
+        qualityInput.value = 'mp3';
+        qualityInput.readOnly = true;
+    } else {
+        if (qualityInput.value === 'mp3') {
+            qualityInput.value = '360';
+        }
+        qualityInput.readOnly = false;
+    }
+}
+
+// Función para que la calidad cambie sola
+function updateYtFieldsV2(val) {
+    const qualityInput = document.getElementById('yt-quality-v2');
+    if (val.toLowerCase().trim() === 'audio') {
+        qualityInput.value = 'mp3';
+        qualityInput.readOnly = true;
+    } else {
+        if (qualityInput.value === 'mp3') qualityInput.value = '360';
+        qualityInput.readOnly = false;
+    }
+}
+
+async function runYoutubeV2(btn) {
+    const container = btn.parentElement;
+    const pre = container.querySelector('.output');
+    const endpoint = container.parentElement.querySelector('.endpoint-path').innerText.trim();
+    
+    // Captura de valores por ID para evitar errores de índice
+    const url = document.getElementById('yt-url-v2').value.trim();
+    const type = document.getElementById('yt-type-v2').value.trim();
+    const quality = document.getElementById('yt-quality-v2').value.trim();
+
+    if (!url) { 
+        pre.innerHTML = "Error: URL requerida"; 
+        return; 
+    }
+
+    // Actualiza el cuadro de texto de la URL visualmente (Endpoint URL box)
+    const displayUrl = `${endpoint}?url=${encodeURIComponent(url)}&type=${type}&quality=${quality}`;
+    container.querySelector('.url-text').innerHTML = `https://api-nexy.ultraplus.click${displayUrl}`;
+    
+    pre.innerHTML = "Status: Loading data from Nexy V2...";
+
+    try {
+        // PETICIÓN GET (Igual a como la pruebas en el navegador)
+        const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}&type=${type}&quality=${quality}`);
+        
+        if (!response.ok) throw new Error("Server Error");
+
+        const data = await response.json();
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error: No se pudo conectar con el servidor V2. Verifica que el servidor esté encendido."; 
+    }
+}
+
+async function runYtdlV3(btn) {
+    const container = btn.parentElement;
+    const pre = document.getElementById('yt-output-v3');
+    const urlDisplay = container.querySelector('.url-text');
+    const endpoint = "/api/dl/ytdlv3";
+    
+    const url = document.getElementById('yt-url-v3').value.trim();
+    const type = document.getElementById('yt-type-v3').value.toLowerCase().trim();
+
+    if (!url) { 
+        pre.innerHTML = "Error: URL requerida"; 
+        return; 
+    }
+
+    // Formatear la URL visual tal como pediste
+    const queryParams = `?url=${encodeURIComponent(url)}&type=${type}`;
+    urlDisplay.innerHTML = `https://api-nexy.ultraplus.click${endpoint}${queryParams}`;
+    
+    pre.innerHTML = "Status: Buscando info y compitiendo servidores (V3)...";
+
+    try {
+        const response = await fetch(`${endpoint}${queryParams}`);
+        
+        if (!response.ok) throw new Error("Server Error");
+
+        const data = await response.json();
+        
+        // Mostrar el JSON con formato legible
+        pre.innerHTML = JSON.stringify(data, null, 4);
+    } catch (e) { 
+        pre.innerHTML = "Error: El servicio V3 no respondió o los servidores fallaron."; 
+    }
+}
+
+
+    </script>
+</body>
+</html>
+</html>

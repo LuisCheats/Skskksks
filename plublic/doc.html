@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Metadatos para compartir -->
+    <meta property="og:title" content="NEXY API | Documentación Técnica">
+    <meta property="og:description" content="Documentación completa de la API pública de NEXY - Infraestructura para desarrolladores">
+    <meta property="og:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    <meta property="og:url" content="https://api-nexy.ultraplus.click/doc">
+    <meta property="og:type" content="website">
+    
+    <!-- Metadatos específicos para WhatsApp -->
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NEXY API | Documentación Técnica">
+    <meta name="twitter:description" content="Documentación completa de la API pública de NEXY">
+    <meta name="twitter:image" content="https://cdn.russellxz.click/cc450380.jpg">
+    
+    <title>NEXY API | Documentación Técnica</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-dark: #2563eb;
+            --background-dark: #02060f;
+            --text-light: #ffffff;
+            --text-secondary: #94a3b8;
+            --surface-dark: rgba(255, 255, 255, 0.015);
+            --border-light: rgba(255, 255, 255, 0.04);
+            --code-bg: #000000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #02060f 0%, #000000 100%);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Efecto de fondo sutil */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0 45px 0;
+        }
+
+        .main-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .main-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #e2e8f0;
+        }
+        
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            color: #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 800;
+            margin-left: 5px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h2 i {
+            color: var(--primary-blue);
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+        }
+
+        .code-block {
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 18px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block::before {
+            content: 'CÓDIGO';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #888;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .highlight {
+            color: var(--primary-blue);
+        }
+
+        .method-badge {
+            font-size: 0.55rem;
+            color: #3b82f6;
+            font-weight: 900;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 25px 0 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-action:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 40px 0 30px 0;
+            color: #475569;
+            font-size: 0.65rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+            max-width: 550px;
+        }
+        
+        .nav-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            font-weight: 800;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-home:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header {
+                margin: 30px 0 35px 0;
+            }
+            
+            .main-logo {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-action {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .code-block {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://cdn.russellxz.click/cc450380.jpg" class="main-logo" alt="NEXY Logo">
+        <h1>NEXY API DOCS</h1>
+        <div class="subtitle">Documentación técnica completa para desarrolladores</div>
+    </div>
+
+    <div class="container">
+        
+        <span class="label">Introducción</span>
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Infraestructura Pública</h2>
+            <p>Nexy ofrece acceso simplificado a herramientas de descarga e IA mediante endpoints públicos. No se requiere autenticación mediante API Keys, permitiendo una integración directa en tus proyectos.</p>
+        </div>
+
+        <span class="label">Configuración</span>
+        <div class="card">
+            <h2><i class="fas fa-link"></i> Base URL</h2>
+            <p>Todas las solicitudes deben dirigirse al siguiente endpoint principal. Asegúrate de incluir el prefijo de api para mantener compatibilidad:</p>
+            <div class="code-block">
+                <code><span class="highlight">https://api-nexy.ultraplus.click/api</span></code>
+            </div>
+        </div>
+
+        <span class="label">Ejemplo de Uso <span class="method-badge">GET</span></span>
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Petición Estándar</h2>
+            <p>Usa cualquier cliente HTTP o Fetch API para obtener datos en formato JSON. Aquí un ejemplo funcional:</p>
+            <div class="code-block">
+                <code>fetch('<span class="highlight">https://api-nexy.ultraplus.click/api/dl/ytdl</span>?url=URL_VIDEO')
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));</code>
+            </div>
+        </div>
+        
+        <span class="label">Respuesta</span>
+        <div class="card">
+            <h2><i class="fas fa-database"></i> Formato JSON</h2>
+            <p>Todos los endpoints devuelven respuestas en formato JSON estandarizado con los siguientes campos:</p>
+            <div class="code-block">
+                <code>{
+    "status": 200,
+    "creator": "Nexy",
+    "result": {
+        "title": "Lana Del Rey - Say Yes To Heaven (Official Audio)",
+        "channel": "Lana Del Rey",
+        "type": "audio",
+        "format": "mp3",
+        "quality": "128",
+        "duration": "3:29",
+        "thumbnail": "https://i.ytimg.com/vi/MiAoetOXKcY/hqdefault.jpg",
+        "download": "https://api-nexy.ultraplus.click/cdn/say-yes-to-heaven.mp3"
+    }
+}</code>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a href="https://api-nexy.ultraplus.click/api" class="btn-action">
+                <i class="fas fa-list"></i>
+                Explorar Endpoints
+            </a>
+            
+            <a href="https://wa.me/819095203873?text=Hola%20Nexy" 
+               target="_blank" 
+               class="btn-action btn-secondary">
+                <i class="fab fa-whatsapp"></i>
+                Soporte Técnico
+            </a>
+            
+            <a href="https://api-nexy.ultraplus.click" class="nav-home">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Inicio
+            </a>
+        </div>
+
+    </div>
+
+    <div class="footer">NEXY DEVELOPMENT TEAM • 2024</div>
+
+    <script>
+        // Efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar efecto al cargar
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Efecto en el logo
+            const logo = document.querySelector('.main-logo');
+            logo.addEventListener('mouseenter', function() {
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            // Efecto en tarjetas
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.3s ease, border-color 0.3s ease';
+                });
+            });
+            
+            // Efecto en botones
+            document.querySelectorAll('.btn-action').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.getAttribute('href')?.includes('wa.me')) {
+                        return; // Dejar que el enlace de WhatsApp se abra normalmente
+                    }
+                    
+                    // Efecto de clic para otros botones
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // Actualizar año en el footer
+            const currentYear = new Date().getFullYear();
+            const footer = document.querySelector('.footer');
+            footer.textContent = footer.textContent.replace('2024', currentYear);
+            
+            // Resaltar sintaxis en código
+            const codeBlocks = document.querySelectorAll('code');
+            codeBlocks.forEach(block => {
+                // Resaltar URLs
+                const text = block.innerHTML;
+                const highlighted = text.replace(/https:\/\/[^\s']+/g, 
+                    '<span class="highlight">$&</span>');
+                block.innerHTML = highlighted;
+            });
+        });
+    </script>
+</body>
+</html>
