@@ -1,25 +1,22 @@
 {
-  "name": "nagato-ui",
-  "version": "2.2.0",
-  "description": "A simple and customizable API documentation interface built with Express.js.",
+  "name": "kirito-yt",
+  "version": "1.0.0",
+  "description": "API de descarga de YouTube MP3/MP4 basada en SaveTube",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "start": "node --no-deprecation index.js"
+    "start": "node index.js"
   },
-  "author": "BrayanX330",
-  "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.8",
-    "body-parser": "^1.20.3",
-    "cheerio": "^1.0.0",
-    "cors": "^2.8.5",
-    "chalk": "^4.1.2",
-    "express": "^4.19.2",
-    "fs": "^0.0.1-security",
-    "https": "^1.0.0",
-    "node-fetch": "^2.6.1",
-    "yt-search": "^2.12.1",
-    "ytdl-core": "^4.11.5"
-  }
+    "axios": "^1.6.7",
+    "crypto": "^1.0.1",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2",
+    "yt-search": "^2.10.6"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Deylin (Mode Devs)",
+  "license": "MIT"
 }

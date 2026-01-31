@@ -1,74 +1,159 @@
-const express = require('express');
-const chalk = require('chalk');
-const fs = require('fs');
-const cors = require('cors');
-const path = require('path');
+import express from "express";
+import fetch from "node-fetch";
+import yts from "yt-search";
+import axios from "axios";
+import crypto from "crypto";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
-app.enable("trust proxy");
-app.set("json spaces", 2);
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-app.use('/', express.static(path.join(__dirname, 'api-page')));
-app.use('/src', express.static(path.join(__dirname, 'src')));
-
-const settingsPath = path.join(__dirname, './src/settings.json');
-const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
-
-app.use((req, res, next) => {
-    const originalJson = res.json;
-    res.json = function (data) {
-        if (data && typeof data === 'object') {
-            const responseData = {
-                status: data.status,
-                creator: settings.apiSettings.creator || "Created Using Rynn UI",
-                ...data
-            };
-            return originalJson.call(this, responseData);
-        }
-        return originalJson.call(this, data);
-    };
-    next();
-});
-
-// Api Route
-let totalRoutes = 0;
-const apiFolder = path.join(__dirname, './src/api');
-fs.readdirSync(apiFolder).forEach((subfolder) => {
-    const subfolderPath = path.join(apiFolder, subfolder);
-    if (fs.statSync(subfolderPath).isDirectory()) {
-        fs.readdirSync(subfolderPath).forEach((file) => {
-            const filePath = path.join(subfolderPath, file);
-            if (path.extname(file) === '.js') {
-                require(filePath)(app);
-                totalRoutes++;
-                console.log(chalk.bgHex('#FFFF99').hex('#333').bold(` Loaded Route: ${path.basename(file)} `));
-            }
-        });
+const savetube = {
+  api: {
+    base: "https://media.savetube.me/api",
+    info: "/v2/info",
+    download: "/download",
+    cdn: "/random-cdn"
+  },
+  headers: {
+    accept: "*/*",
+    "content-type": "application/json",
+    origin: "https://yt.savetube.me",
+    referer: "https://yt.savetube.me/",
+    "user-agent": "Postify/1.0.0" // 🔥 clave para evitar el 403
+  },
+  crypto: {
+    hexToBuffer: (hexString) => {
+      const matches = hexString.match(/.{1,2}/g);
+      return Buffer.from(matches.join(""), "hex");
+    },
+    decrypt: async (enc) => {
+      const secretKey = "C5D58EF67A7584E4A29F6C35BBC4EB12";
+      const data = Buffer.from(enc, "base64");
+      const iv = data.slice(0, 16);
+      const content = data.slice(16);
+      const key = savetube.crypto.hexToBuffer(secretKey);
+      const decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
+      let decrypted = decipher.update(content);
+      decrypted = Buffer.concat([decrypted, decipher.final()]);
+      return JSON.parse(decrypted.toString());
+    },
+  },
+  isUrl: (str) => {
+    try {
+      new URL(str);
+      return /youtube.com|youtu.be/.test(str);
+    } catch {
+      return false;
     }
-});
-console.log(chalk.bgHex('#90EE90').hex('#333').bold(' Load Complete! ✓ '));
-console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Total Routes Loaded: ${totalRoutes} `));
+  },
+  youtube: (url) => {
+    const patterns = [
+      /youtube.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
+      /youtube.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /youtu.be\/([a-zA-Z0-9_-]{11})/
+    ];
+    for (let pattern of patterns) {
+      if (pattern.test(url)) return url.match(pattern)[1];
+    }
+    return null;
+  },
+  request: async (endpoint, data = {}, method = "post") => {
+    try {
+      const { data: response } = await axios({
+        method,
+        url: `${endpoint.startsWith("http") ? "" : savetube.api.base}${endpoint}`,
+        data: method === "post" ? data : undefined,
+        params: method === "get" ? data : undefined,
+        headers: savetube.headers
+      });
+      return { status: true, code: 200, data: response };
+    } catch (error) {
+      return { status: false, code: error.response?.status || 500, error: error.message };
+    }
+  },
+  getCDN: async () => {
+    const response = await savetube.request(savetube.api.cdn, {}, "get");
+    if (!response.status) return response;
+    return { status: true, code: 200, data: response.data.cdn };
+  },
+  download: async (link, type = "audio") => {
+    if (!savetube.isUrl(link)) return { status: false, code: 400, error: "URL inválida" };
+    const id = savetube.youtube(link);
+    if (!id) return { status: false, code: 400, error: "No se pudo obtener ID del video" };
+    try {
+      const cdnx = await savetube.getCDN();
+      if (!cdnx.status) return cdnx;
+      const cdn = cdnx.data;
+      const videoInfo = await savetube.request(
+        `https://${cdn}${savetube.api.info}`,
+        { url: `https://www.youtube.com/watch?v=${id}` }
+      );
+      if (!videoInfo.status) return videoInfo;
+      const decrypted = await savetube.crypto.decrypt(videoInfo.data.data);
+      const downloadData = await savetube.request(
+        `https://${cdn}${savetube.api.download}`,
+        {
+          id,
+          downloadType: type === "audio" ? "audio" : "video",
+          quality: type === "audio" ? "mp3" : "720p",
+          key: decrypted.key
+        }
+      );
+      if (!downloadData.data.data?.downloadUrl)
+        return { status: false, code: 500, error: "No se pudo obtener link de descarga" };
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'api-page', 'index.html'));
+      return {
+        status: true,
+        code: 200,
+        result: {
+          title: decrypted.title || "Desconocido",
+          format: type === "audio" ? "mp3" : "mp4",
+          download: downloadData.data.data.downloadUrl,
+          thumbnail: decrypted.thumbnail || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+        }
+      };
+    } catch (error) {
+      return { status: false, code: 500, error: error.message };
+    }
+  }
+};
+
+// 🎧 YTMP3
+app.get("/ytmp3", async (req, res) => {
+  const { url } = req.query;
+  if (!url) return res.json({ status: false, error: "Falta el parámetro url" });
+
+  try {
+    const dl = await savetube.download(url, "audio");
+    if (!dl.status) return res.status(500).json(dl);
+    res.json(dl.result);
+  } catch (e) {
+    res.status(500).json({ status: false, error: e.message });
+  }
 });
 
-app.use((req, res, next) => {
-    res.status(404).sendFile(process.cwd() + "/api-page/404.html");
+// 🎬 YTMP4
+app.get("/ytmp4", async (req, res) => {
+  const { url } = req.query;
+  if (!url) return res.json({ status: false, error: "Falta el parámetro url" });
+
+  try {
+    const dl = await savetube.download(url, "video");
+    if (!dl.status) return res.status(500).json(dl);
+    res.json(dl.result);
+  } catch (e) {
+    res.status(500).json({ status: false, error: e.message });
+  }
 });
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).sendFile(process.cwd() + "/api-page/500.html");
-});
+app.get("/", (req, res) => res.send("API Kirito-YT funcionando 🔥"));
 
-app.listen(PORT, () => {
-    console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Server is running on port ${PORT} `));
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 API Kirito-YT funcionando 🔥
+📡 Puerto: ${PORT}
+🛰️ Dirección posible: http://nd2.codescript.my:${PORT}/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`);
 });
-
-module.exports = app;
