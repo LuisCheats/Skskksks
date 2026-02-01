@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --accent: #3b82f6;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 450px;
+            /* Espacio superior e inferior generoso */
+            padding: 60px 20px 40px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Foto de Perfil */
+        .profile-box {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 40px;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+        }
+
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
+        .tagline { color: var(--text-sub); font-size: 1rem; margin-bottom: 40px; font-weight: 400; }
+
+        /* Lista de Servicios */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .service-item {
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            padding: 18px 25px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-align: left;
+            border: 1px solid rgba(0,0,0,0.02);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .service-item:active {
+            transform: scale(0.97);
+            background: #f1f5f9;
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: #eff6ff;
+            color: var(--accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+        }
+
+        .service-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; }
+        .service-info p { font-size: 0.9rem; color: var(--text-sub); line-height: 1.4; }
+
+        /* Botón Contáctame */
+        .btn-wa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-wa:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer con Copyright Lindo */
+        footer {
+            margin-top: auto; /* Empuja el footer al final */
+            padding-top: 60px; /* Espacio extra después del botón */
+            padding-bottom: 20px;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            opacity: 0.6;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .heart {
+            color: #ef4444;
+            display: inline-block;
+            animation: beat 1.5s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="profile-box">
+            <img src="https://cdn.skyultraplus.com/uploads/u3/b3dc29f3210dbfb7.jpg" alt="Nexy" class="profile-img">
+        </div>
+
+        <h1>Nexy</h1>
+        <p class="tagline">16 años • Desarrolladora • Colombia</p>
+
+        <div class="services-list">
+            <div class="service-item">
+                <div class="icon-circle"><i data-lucide="bot"></i></div>
+                <div class="service-info">
+                    <h3>Bots de Chat</h3>
+                    <p>Automatización inteligente para WhatsApp y Discord.</p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="icon-circle" style="background: #fff7ed; color: #f97316;">
+                    <i data-lucide="database"></i>
+                </div>
+                <div class="service-info">
+                    <h3>Web Scraping</h3>
+                    <p>Extracción de datos estructurados con Javascript.</p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="icon-circle" style="background: #f0fdf4; color: #22c55e;">
+                    <i data-lucide="webhook"></i>
+                </div>
+                <div class="service-info">
+                    <h3>APIs & JS</h3>
+                    <p>Optimización de código y creación de APIs robustas.</p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="icon-circle" style="background: #faf5ff; color: #a855f7;">
+                    <i data-lucide="layout"></i>
+                </div>
+                <div class="service-info">
+                    <h3>Sitios Web</h3>
+                    <p>Interfaces modernas, rápidas y totalmente fluidas.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://wa.me/819095203873" target="_blank" class="btn-wa">
+            <i data-lucide="message-circle"></i> Contáctame
+        </a>
+
+        <footer>
+            <p class="copyright">
+                Made with love by nexy
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
