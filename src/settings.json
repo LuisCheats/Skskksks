@@ -1,91 +1,153 @@
 {
-  "name": "Nagato-Api UI",
-  "version": "v3.9.0",
-  "description": "API simple y fácil de usar.",
-  "bannerImage": "/src/banner.jpg",
+  "name": "Shadow'S demo",
+  "version": "v7.1.0",
+  "description": "Simple and easy to use API documentations.",
+  "maintenance": {
+    "enabled": false,
+    "message": ""
+  },
+  "bannerImage": "/src/images/banner.jpg",
+  "previewImage": "/src/images/preview.png",
   "header": {
-    "status": "¡En línea!"
+    "status": "Online"
   },
   "apiSettings": {
-    "creator": "Nagato",
-    "apikey": ["nagato-api"]
+    "creator": "Shadow'S demo",
+    "requireApikey": false,
+    "apikey": {
+      "demo": {
+        "rateLimit": "5000/day",
+        "enabled": true
+      },
+      "admin": {
+        "rateLimit": "unlimited",
+        "enabled": true
+      },
+      "Raol": {
+        "rateLimit": "unlimited",
+        "enabled": true,
+        "category": "premium",
+        "name": "Raol"
+      }
+    }
   },
   "categories": [
     {
-      "name": "IA (Inteligencia Artificial)",
+      "name": "Artificial Intelligence",
       "items": [
         {
           "name": "LuminAI",
-          "desc": "Habla con LuminAI",
+          "desc": "Advanced AI assistant powered by LuminAI for intelligent conversations",
           "path": "/ai/luminai?text=",
-          "status": "listo",
+          "status": "ready",
           "params": {
-            "text": "Texto para que LuminAI responda"
-          }
-        },
-        {
-          "name": "HydroMind",
-          "desc": "Consulta la lista de modelos de IA soportados aquí: https://mind.hydrooo.web.id",
-          "path": "/ai/hydromind?text=&model=",
-          "status": "listo",
-          "params": {
-            "text": "Texto o comando para el chat de IA",
-            "model": "Consulta la lista de modelos de IA soportados aquí: https://mind.hydrooo.web.id"
+            "text": "Text message for the AI to respond to"
           }
         }
       ]
     },
     {
-      "name": "Aleatorio",
+      "name": "Random Images",
       "items": [
         {
           "name": "Blue Archive",
-          "desc": "Imágenes aleatorias de Blue Archive",
+          "desc": "Get random high-quality Blue Archive character images",
           "path": "/random/ba",
-          "status": "listo"
+          "status": "ready"
         }
       ]
     },
     {
-      "name": "Herramientas de Búsqueda",
+      "name": "Image Makers",
       "items": [
         {
-          "name": "YouTube",
-          "desc": "Búsqueda de videos",
-          "path": "/search/youtube?q=",
-          "status": "listo",
+          "name": "BRAT Generator",
+          "desc": "Generate BRAT-style text images with customizable colors and backgrounds",
+          "path": "/maker/brat?text=Hello World",
+          "status": "ready",
           "params": {
-            "q": "Consulta de búsqueda"
+            "text": "Text to be inserted into the BRAT image (required)"
           }
         },
         {
-          "name": "YouTube MP3",
-          "desc": "Convierte videos de YouTube en audio MP3",
-          "path": "/download/ytmp3?url=",
-          "status": "listo",
+          "name": "BRAT Video Generator",
+          "desc": "Generate animated BRAT-style text videos with customizable colors and backgrounds",
+          "path": "/maker/bratvid?text=Hello World",
+          "status": "ready",
           "params": {
-            "url": "Enlace del video de YouTube"
+            "text": "Text to be inserted into the BRAT video (required)"
           }
         }
       ]
     },
     {
-      "name": "Herramientas de grupos",
+      "name": "Download",
       "items": [
         {
-          "name": "WelcomeV2",
-          "desc": "Genera una imagen de bienvenida personalizada para nuevos miembros",
-          "path": "/welcomev2?username=&guildName=&memberCount=&avatar=&background=",
-          "status": "listo",
+          "name": "YouTube MP3",
+          "desc": "Download audio in MP3 format from YouTube",
+          "path": "/download/ytmp3?url=",
+          "status": "ready",
           "params": {
-            "username": "Nombre del usuario",
-            "guildName": "Nombre del grupo",
-            "memberCount": "Número de miembro",
-            "avatar": "URL del avatar del usuario",
-            "background": "URL del fondo para la tarjeta de bienvenida"
+            "url": "YouTube video URL"
+          }
+        },
+        {
+          "name": "YouTube MP4",
+          "desc": "Download video in MP4 format from YouTube",
+          "path": "/download/ytmp4?url=",
+          "status": "ready",
+          "params": {
+            "url": "YouTube video URL"
+          }
+        },
+        {
+          "name": "Facebook Downloader",
+          "desc": "Download videos or reels from Facebook",
+          "path": "/download/facebook?url=",
+          "status": "ready",
+          "params": {
+            "url": "Facebook video URL"
+          }
+        },
+        {
+          "name": "Instagram Downloader",
+          "desc": "Download posts, reels, or stories from Instagram",
+          "path": "/download/instagram?url=",
+          "status": "ready",
+          "params": {
+            "url": "Instagram post or reel URL"
+          }
+        },
+        {
+          "name": "TikTok Downloader",
+          "desc": "Download TikTok videos without watermark",
+          "path": "/download/tiktok?url=",
+          "status": "ready",
+          "params": {
+            "url": "TikTok video URL"
+          }
+        },
+        {
+          "name": "Spotify Downloader",
+          "desc": "Download songs or playlists from Spotify",
+          "path": "/download/spotify?url=",
+          "status": "ready",
+          "params": {
+            "url": "Spotify track or playlist URL"
           }
         }
       ]
+    }
+  ],
+  "apiKeys": [
+    {
+      "key": "Raol",
+      "name": "Raol",
+      "category": "premium",
+      "ratelimit": "unlimited",
+      "active": true,
+      "createdAt": "2025-10-05T04:45:58.171Z"
     }
   ]
 }
