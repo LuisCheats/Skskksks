@@ -74,7 +74,7 @@
       "items": [
         {
           "name": "NSFW",
-          "desc": "Get random high-quality NSFW waifu images",
+          "desc": "Get NSFW waifu images",
           "path": "/random/waifu",
           "status": "ready"
         }
